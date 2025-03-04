@@ -1,10 +1,14 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:osscam_app2/constants/color.dart';
 import 'package:osscam_app2/customs/bug_container.dart';
+import 'package:osscam_app2/features/create_and_join_feature/model/project_model.dart';
 import 'package:readmore/readmore.dart';
 
 class ProjectCreatedSuccessfullyPage extends StatelessWidget {
-  ProjectCreatedSuccessfullyPage({super.key});
+  ProjectCreatedSuccessfullyPage({super.key, required this.projectModel});
+  ProjectModel projectModel;
   final List<String> tasks = [
     "Implement Data Model",
     "Implement Search Functionality",
@@ -20,11 +24,84 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
     "Implement Search Functionality",
     "Implement Search Functionality",
   ];
-
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: BLUE,
+      drawer: Drawer(
+        backgroundColor: BLUE,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Container(
+                width: 90,
+                height: 90,
+                child: Image.asset("assets/image/yeti.png"),
+              ),
+              SizedBox(height: 16),
+              Text(
+                "User Name",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: GREY,
+                ),
+              ),
+              SizedBox(height: 48),
+
+              Divider(),
+              SizedBox(height: 16),
+
+              ListTile(
+                onTap: () {},
+                leading: Image.asset("assets/image/link 1.png", color: GREY),
+                title: Text(
+                  "Create & Join",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: GREY,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+
+              ListTile(
+                onTap: () {},
+                leading: Icon(Icons.translate, color: GREY),
+                title: Text(
+                  "Change language",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: GREY,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+
+              ListTile(
+                onTap: () {},
+                leading: Icon(Icons.logout, color: GREY),
+                title: Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: GREY,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+
+              Divider(),
+            ],
+          ),
+        ),
+      ),
       body: Column(
         children: [
           Padding(
@@ -42,9 +119,14 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+                      IconButton(
+                        onPressed: () {
+                          scaffoldKey.currentState!.openDrawer();
+                        },
+                        icon: Icon(Icons.menu),
+                      ),
                       Text(
-                        "project name",
+                        projectModel.name,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -56,13 +138,141 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
                         itemBuilder: (context) {
                           return [
                             PopupMenuItem(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder:
+                                      (context) => Center(
+                                        child: Stack(
+                                          alignment: Alignment.bottomCenter,
+                                          children: [
+                                            Container(
+                                              width: 272,
+                                              height: 199,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: RED,
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 10,
+                                              child: Container(
+                                                width: 239,
+                                                height: 149,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: GREY,
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        left: 8.0,
+                                                      ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                          8.0,
+                                                        ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Are you sure you want to delete this project ?",
+                                                          style: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.only(
+                                                                bottom: 16.0,
+                                                              ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {},
+                                                                child: Container(
+                                                                  width: 86,
+                                                                  height: 32,
+                                                                  decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                          5,
+                                                                        ),
+                                                                    color:
+                                                                        Color.fromARGB(
+                                                                          255,
+                                                                          153,
+                                                                          153,
+                                                                          153,
+                                                                        ),
+                                                                  ),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Yes, i sure",
+                                                                      style: TextStyle(
+                                                                        fontSize:
+                                                                            16,
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                        color:
+                                                                            Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                    context,
+                                                                  );
+                                                                },
+                                                                child: Text(
+                                                                  "Cancel",
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color:
+                                                                        Colors
+                                                                            .black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                );
+                              },
                               value: "option1",
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
                                       Icon(Icons.delete),
-                                      Text("  Delete"),
+                                      Text("    Delete"),
                                     ],
                                   ),
                                 ],
@@ -70,14 +280,10 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
                             ),
                             PopupMenuItem(
                               value: "option2",
-                              child: Divider(thickness: 0.5),
-                            ),
-                            PopupMenuItem(
-                              value: "option3",
                               child: Row(
                                 children: [
                                   Icon(Icons.edit_square),
-                                  Text("  Update"),
+                                  Text("    Update"),
                                 ],
                               ),
                             ),
@@ -103,7 +309,6 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
           SizedBox(height: 32),
           Container(
             width: 316,
-            //height: 218,
             decoration: BoxDecoration(
               color: YELLOW,
               borderRadius: BorderRadius.circular(16),
@@ -111,24 +316,24 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ReadMoreText(
-                " Enterprise equipment management system\nThrough which information is stored All types of equipment available And all maintenance operations are with Possibility of issuing reports and statements\nPeriodic (such as reports on devices). Which must be formatted and replaced With new devices Through which information is stored All types of equipment available And all maintenance operations are with Possibility of issuing reports and statements Periodic (such as reports on devices). Which must be formatted and replaced With new devices.Through which information is stored All types of equipment available And all maintenance operations are with Possibility ",
+                projectModel.description,
                 trimLines: 10,
                 colorClickableText: Colors.blue,
                 trimMode: TrimMode.Line,
-                trimCollapsedText: "... Read more",
-                trimExpandedText: "Show less",
+                trimCollapsedText: "..... Read more",
+                //trimExpandedText: "Show less",
                 moreStyle: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
                   color: GREEN,
                 ),
-                lessStyle: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  decoration: TextDecoration.underline,
-                  color: GREEN,
-                ),
+                // lessStyle: TextStyle(
+                //   fontSize: 15,
+                //   fontWeight: FontWeight.w400,
+                //   decoration: TextDecoration.underline,
+                //   color: GREEN,
+                // ),
                 style: TextStyle(
                   color: BLUE,
                   fontSize: 16,
@@ -138,7 +343,6 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
-
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -221,9 +425,13 @@ class ProjectCreatedSuccessfullyPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         onPressed: () {},
         backgroundColor: GREEN,
-        child: Icon(Icons.today_outlined, color: BLUE),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Image.asset("assets/image/fab_background.png"),
+        ),
       ),
     );
   }

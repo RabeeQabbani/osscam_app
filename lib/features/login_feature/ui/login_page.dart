@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_super_parameters, must_be_immutable
 // ignore_for_file: sized_box_for_whitespace
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osscam_app2/constants/color.dart';
 import 'package:osscam_app2/features/create_and_join_feature/ui/create_and_join_page.dart';
 import 'package:osscam_app2/customs/elevated_button.dart';
@@ -8,6 +10,9 @@ import 'package:osscam_app2/customs/password_textfield.dart';
 import 'package:osscam_app2/customs/row_login_or_signup.dart';
 import 'package:osscam_app2/customs/row_remember_me.dart';
 import 'package:osscam_app2/customs/textfield.dart';
+import 'package:osscam_app2/features/login_feature/bloc/login_bloc.dart';
+import 'package:osscam_app2/features/login_feature/model/login_model.dart';
+import 'package:osscam_app2/features/login_feature/service/login_service.dart';
 import 'package:osscam_app2/features/signup_feature/ui/signup_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -67,13 +72,42 @@ class LoginPage extends StatelessWidget {
             ],
           ),
           SizedBox(height: 48),
-          CustomElevatedButton(
-            title: "Login",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CreateAndJoinPage()),
-              );
+          BlocConsumer<LoginBloc, LoginState>(
+            listener: (context, state) {
+              if (state is LoginSuccessState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Login success"),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CreateAndJoinPage()),
+                );
+              } else if (state is LoginFailedState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              return state is LoginLoadingState
+                  ? Center(child: CircularProgressIndicator.adaptive())
+                  : CustomElevatedButton(
+                    title: "Login",
+                    onPressed: () {
+                      BlocProvider.of<LoginBloc>(context).add(
+                        LoggingEvent(
+                          email: emailController.text,
+                          pasword: passwordController.text,
+                        ),
+                      );
+                    },
+                  );
             },
           ),
           SizedBox(height: 10),

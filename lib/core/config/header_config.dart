@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HeaderConfig {
   static Options getHeader({bool useToken = true}) {
-    if (sl.get<SharedPreferences>().getString(TOKEN) == null) {
+    if (sl.get<SharedPreferences>().getString("token") == null) {
       throw NoTokenFound();
     } else {
       if (useToken) {
@@ -14,7 +14,7 @@ class HeaderConfig {
           headers: {
             'Content-Type': 'application/json',
             "Authorization":
-                "Bearer ${sl.get<SharedPreferences>().getString(TOKEN)}",
+                "Bearer ${sl.get<SharedPreferences>().getString("token")}",
           },
         );
       } else {

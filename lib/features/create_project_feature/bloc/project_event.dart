@@ -1,6 +1,6 @@
-part of 'project_bloc.dart';
+// part of 'project_bloc.dart';
 
-@immutable
-sealed class ProjectEvent {}
+// @immutable
+// sealed class ProjectEvent {}
 
-class CreatingProject extends ProjectEvent {}
+// class CreatingProject extends ProjectEvent {}

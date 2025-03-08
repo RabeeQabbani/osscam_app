@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:osscam_app2/constants/constant_word.dart';
 import 'package:osscam_app2/core/config/service_locater.dart';
 import 'package:osscam_app2/core/exceptions/service_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';

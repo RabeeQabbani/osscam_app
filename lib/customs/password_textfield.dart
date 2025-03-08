@@ -1,12 +1,22 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:osscam_app2/constants/color.dart';
 
-class CustomPasswordTexField extends StatelessWidget {
-  const CustomPasswordTexField({super.key, required this.passwordController});
+class CustomPasswordTexField extends StatefulWidget {
+  CustomPasswordTexField({
+    super.key,
+    required this.passwordController,
+    required this.isVisible,
+  });
 
   final TextEditingController passwordController;
+  bool isVisible;
 
+  @override
+  State<CustomPasswordTexField> createState() => _CustomPasswordTexFieldState();
+}
+
+class _CustomPasswordTexFieldState extends State<CustomPasswordTexField> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,10 +35,20 @@ class CustomPasswordTexField extends StatelessWidget {
           width: 226,
           height: 43,
           child: TextFormField(
-            controller: passwordController,
-            obscureText: true,
+            controller: widget.passwordController,
+            obscureText: !widget.isVisible,
             decoration: InputDecoration(
-              suffixIcon: Icon(Icons.visibility_off),
+              suffixIcon: InkWell(
+                onTap: () {
+                  setState(() {
+                    widget.isVisible = !widget.isVisible;
+                  });
+                },
+                child:
+                    widget.isVisible
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+              ),
               filled: true,
               fillColor: GREEN,
               focusColor: GREEN,
